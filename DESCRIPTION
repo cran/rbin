@@ -1,7 +1,7 @@
 Package: rbin
 Type: Package
 Title: Tools for Binning Data
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: person("Aravind", "Hebbali", email = "hebbali.aravind@gmail.com", role = c("aut", "cre"))
 Description: Manually bin data using weight of evidence and information value. Includes other binning 
     methods such as equal length, quantile and winsorized. Options for combining levels of categorical
@@ -15,14 +15,13 @@ Depends: R (>= 3.3)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
-Imports: DescTools, dplyr, forcats, ggplot2, glue, graphics, magrittr,
-        miniUI, purrr, recipes, rlang, rstudioapi, shiny, stats,
-        tibble, utils
+Imports: DescTools, dplyr, forcats, ggplot2, graphics, magrittr,
+        miniUI, recipes, rlang, rstudioapi, shiny, stats, tibble, utils
 Suggests: covr, testthat, vdiffr, knitr, rmarkdown
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-01-03 05:38:36 UTC; HP
+Packaged: 2020-02-04 06:44:43 UTC; HP
 Author: Aravind Hebbali [aut, cre]
 Maintainer: Aravind Hebbali <hebbali.aravind@gmail.com>
 Repository: CRAN
-Date/Publication: 2019-01-04 11:20:04 UTC
+Date/Publication: 2020-02-04 09:00:02 UTC
