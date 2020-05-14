@@ -8,10 +8,14 @@
 #' \dontrun{
 #' rbinAddin(data = mbank)
 #' }
-#'
+#'  
 #' @export
 #'
 rbinAddin <- function(data = NULL) {
+
+  check_suggests('shiny')
+  check_suggests('miniUI')
+  check_suggests('rstudioapi')
 
 	context <- rstudioapi::getActiveDocumentContext()
   text <- context$selection[[1]]$text
@@ -20,7 +24,7 @@ rbinAddin <- function(data = NULL) {
     if (is.null(data)) {
          if (nzchar(default_data)) {
               data <- default_data
-         } 
+         }
     }
 
     if (any(class(data) %in% c("data.frame","tibble","tbl_df"))) {
@@ -48,7 +52,7 @@ rbinAddin <- function(data = NULL) {
 			  					shiny::textInput("mydata", "Data Name", value = mydata)
 			  				)
 			  			)
-        
+
 						)
 		  		)
         )
@@ -71,10 +75,10 @@ rbinAddin <- function(data = NULL) {
       	  	shiny::fluidRow(
       	  	  shiny::column(4,
       	  	  	shiny::h4('Cut Points'),
-			    			shiny::p('For manual binning, you need to specify the cut points for the bins. `rbin` 
-			    								follows the left closed and right open interval for creating bins. The 
-                          number of cut points you specify is one less than the number of bins you 
-                          want to create i.e. if you want to create 10 bins, you need to specify only 
+			    			shiny::p('For manual binning, you need to specify the cut points for the bins. `rbin`
+			    								follows the left closed and right open interval for creating bins. The
+                          number of cut points you specify is one less than the number of bins you
+                          want to create i.e. if you want to create 10 bins, you need to specify only
                           9 cut points. View the vignette or documentation for more information.')
       	  	  	),
       	  	  shiny::column(8, align = 'center',
@@ -86,7 +90,7 @@ rbinAddin <- function(data = NULL) {
 				      	shiny::actionButton("create_bins", "Create Bins")
 		      		)
 		    		)
-		  		)   
+		  		)
       	)
       ),
       miniUI::miniTabPanel("Bins", icon = shiny::icon("table"),
@@ -112,7 +116,7 @@ rbinAddin <- function(data = NULL) {
       	)
       )
     )
-  
+
 
   server <- function(input, output, session) {
 
@@ -167,17 +171,15 @@ rbinAddin <- function(data = NULL) {
 	})
 
 	compute_bins <- shiny::eventReactive(input$create_bins, {
-      rbin_manual(data1(), input$resp_var, input$pred_var, bins_values())
+      shiny_rbin_manual(data1(), input$resp_var, input$pred_var, bins_values())
 	})
 
 	down_bins <- shiny::reactive({
-		compute_bins() %>%
-		  magrittr::use_series(bins) %>%
-		  dplyr::select(cut_point, bin_count, good, bad, woe, iv)
+    compute_bins()$bins[c('cut_point', 'bin_count', 'good', 'bad', 'woe', 'iv')]
 	})
 
 	output$woe_manual <- shiny::renderPrint({
-	  compute_bins() 
+	  compute_bins()
 	})
 
 	output$woe <- shiny::renderPlot({
@@ -220,7 +222,7 @@ rbinFactorAddin <- function(data = NULL) {
     if (is.null(data)) {
          if(nzchar(default_data)) {
               data <- default_data
-         } 
+         }
     }
 
     if (any(class(data) %in% c("data.frame","tibble","tbl_df"))) {
@@ -350,8 +352,8 @@ rbinFactorAddin <- function(data = NULL) {
 		shiny::updateSelectInput(
 	  	session,
 	    inputId = "sel_cat",
-	    choices = levels(as.factor(dplyr::pull(data1(), input$pred_var))),
-	    selected = levels(as.factor(dplyr::pull(data1(), input$pred_var)))
+	    choices = levels(as.factor(data1()[[input$pred_var]])),
+	    selected = levels(as.factor(data1()[[input$pred_var]]))
 	  )
 
 	})
@@ -362,21 +364,21 @@ rbinFactorAddin <- function(data = NULL) {
 	})
 
 	new_comb <- shiny::eventReactive(input$create_bins, {
-		rbin_factor_combine(data1(), !! rlang::sym(as.character(input$pred_var)), as.character(selected_levs()), as.character(input$new_lev))
+		shiny_rbin_factor_combine(data1(), as.character(input$pred_var), 
+      as.character(selected_levs()), as.character(input$new_lev))
 	})
 
 	woe_man <- shiny::eventReactive(input$create_bins, {
-		rbin_factor(new_comb(), !! rlang::sym(as.character(input$resp_var)), !! rlang::sym(as.character(input$pred_var)))
+		shiny_rbin_factor(new_comb(), as.character(input$resp_var), as.character(input$pred_var))
 	})
 
 	down_bins <- shiny::reactive({
-		woe_man() %>%
-		  magrittr::use_series(bins) %>%
-		  dplyr::select(level, bin_count, good, bad, woe, iv)
+    woe_man()$bins[c('level', 'bin_count', 'good', 'bad', 'woe', 'iv')]
 	})
 
 	woe_plot <- shiny::eventReactive(input$create_bins, {
-		graphics::plot(rbin_factor(new_comb(), !! rlang::sym(as.character(input$resp_var)), !! rlang::sym(as.character(input$pred_var))))
+		graphics::plot(shiny_rbin_factor(new_comb(), as.character(input$resp_var), 
+      as.character(input$pred_var)))
 	})
 
 	output$woe_manual <- shiny::renderPrint({
@@ -385,10 +387,6 @@ rbinFactorAddin <- function(data = NULL) {
 
 	output$woe <- shiny::renderPlot({
 	  woe_plot()
-	})
-
-	create_woe <- shiny::reactive({
-	  rbin_factor_create(new_comb(), !! rlang::sym(as.character(input$pred_var)))
 	})
 
   shiny::observeEvent(input$done, {
