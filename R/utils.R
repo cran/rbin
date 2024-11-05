@@ -50,14 +50,13 @@ create_intervals <- function(sym_sign, fbin2) {
 
 }
 
-
 freq_bin_create <- function(bm, bin_rep) {
 
-	bm$bin <- bin_rep
-	bin_create(bm)
+  data <- bm[order(bm$predictor), ]
+  data$bin <- bin_rep
+  bin_create(data)
 
 }
-
 
 plot_bins <- function(x) {
 
@@ -65,17 +64,17 @@ plot_bins <- function(x) {
   xseq <- nrow(plot_data)
 
   p <-
-    ggplot2::ggplot(data = plot_data) +
-    ggplot2::geom_line(ggplot2::aes(x = bin, y = woe), color = "blue") +
-    ggplot2::geom_point(ggplot2::aes(x = bin, y = woe), color = "red") +
-    ggplot2::xlab("Bins") + ggplot2::ylab("WoE") + ggplot2::ggtitle("WoE Trend") +
-    ggplot2::scale_x_continuous(breaks = seq(xseq))
+    ggplot(data = plot_data) +
+    geom_line(aes(x = bin, y = woe), color = "blue") +
+    geom_point(aes(x = bin, y = woe), color = "red") +
+    xlab("Bins") + ylab("WoE") + ggtitle("WoE Trend") +
+    scale_x_continuous(breaks = seq(xseq))
 
   return(p)
 
 }
 
-#' @importFrom utils packageVersion menu install.packages
+
 check_suggests <- function(pkg) {
 
   pkg_flag <- tryCatch(utils::packageVersion(pkg), error = function(e) NA)
@@ -109,7 +108,7 @@ winsor <- function(x, min_val = NULL, max_val = NULL, probs = c(0.05, 0.95),
     x[x < y[1]] <- y[1]
   } else {
     if (is.null(max_val)) {
-      stop("Argument max_val is missing.")
+      stop("Argument max_val is missing.", call. = FALSE)
     }
     z <- sort(x)
     min_replace <- max(head(z, min_val))
@@ -121,3 +120,6 @@ winsor <- function(x, min_val = NULL, max_val = NULL, probs = c(0.05, 0.95),
   return(x)
 }
 
+try_pkg <- function(pkg) {
+  tryCatch(packageVersion(pkg), error = function(e) NA)
+}

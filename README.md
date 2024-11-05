@@ -5,17 +5,13 @@
 
 > Tools for binning data
 
-[![CRAN\_Status\_Badge](https://www.r-pkg.org/badges/version/rbin)](https://cran.r-project.org/package=rbin)
-[![cran
-checks](https://cranchecks.info/badges/summary/rbin)](https://cran.r-project.org/web/checks/check_results_rbin.html)
-[![Travis-CI Build
-Status](https://travis-ci.org/rsquaredacademy/rbin.svg?branch=master)](https://travis-ci.org/rsquaredacademy/rbin)
-[![AppVeyor Build
-Status](https://ci.appveyor.com/api/projects/status/github/rsquaredacademy/rbin?branch=master&svg=true)](https://ci.appveyor.com/project/aravindhebbali/rbin)
+<!-- badges: start -->
+
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/rbin)](https://cran.r-project.org/package=rbin)
+[![R-CMD-check](https://github.com/rsquaredacademy/rbin/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/rsquaredacademy/rbin/actions/workflows/R-CMD-check.yaml)
 [![Coverage
-status](https://codecov.io/gh/rsquaredacademy/rbin/branch/master/graph/badge.svg)](https://codecov.io/github/rsquaredacademy/rbin?branch=master)
-[![](https://cranlogs.r-pkg.org/badges/grand-total/rbin)](https://cran.r-project.org/package=rbin)
-[![lifecycle](https://img.shields.io/badge/lifecycle-maturing-blue.svg)](https://www.tidyverse.org/lifecycle/#maturing)
+status](https://codecov.io/gh/rsquaredacademy/rbin/branch/master/graph/badge.svg)](https://app.codecov.io/github/rsquaredacademy/rbin?branch=master)
+<!-- badges: end -->
 
 ## Installation
 
@@ -32,8 +28,8 @@ devtools::install_github("rsquaredacademy/rbin")
 
 rbin includes two addins for manually binning data:
 
-  - `rbinAddin()`
-  - `rbinFactorAddin()`
+- `rbinAddin()`
+- `rbinFactorAddin()`
 
 ## Usage
 
@@ -71,7 +67,7 @@ bins
 plot(bins)
 ```
 
-<img src="tools/README-manual-1.png" width="100%" /><img src="tools/README-manual-2.png" width="100%" />
+<img src="tools/README-manual-1.png" width="100%" />
 
 ### Combine Factor Levels
 
@@ -109,7 +105,7 @@ bins
 plot(bins)
 ```
 
-<img src="tools/README-factor-1.png" width="100%" /><img src="tools/README-factor-2.png" width="100%" />
+<img src="tools/README-factor-1.png" width="100%" />
 
 ### Quantile Binning
 
@@ -145,7 +141,7 @@ bins
 plot(bins)
 ```
 
-<img src="tools/README-quantile-1.png" width="100%" /><img src="tools/README-quantile-2.png" width="100%" />
+<img src="tools/README-quantile-1.png" width="100%" />
 
 ### Winsorized Binning
 
@@ -181,7 +177,7 @@ bins
 plot(bins)
 ```
 
-<img src="tools/README-winsorize-1.png" width="100%" /><img src="tools/README-winsorize-2.png" width="100%" />
+<img src="tools/README-winsorize-1.png" width="100%" />
 
 ### Equal Length Binning
 
@@ -217,12 +213,24 @@ bins
 plot(bins)
 ```
 
-<img src="tools/README-equal_length-1.png" width="100%" /><img src="tools/README-equal_length-2.png" width="100%" />
+<img src="tools/README-equal_length-1.png" width="100%" />
 
 ## Alternatives
 
-  - [smbinning](https://CRAN.R-project.org/package=smbinning)
-  - [logiBin](https://CRAN.R-project.org/package=logiBin)
-  - [woeR](https://CRAN.R-project.org/package=woeR)
-  - [woeBinning](https://CRAN.R-project.org/package=woeBinning)
-  - [binr](https://CRAN.R-project.org/package=binr)
+- [smbinning](https://CRAN.R-project.org/package=smbinning)
+- [logiBin](https://CRAN.R-project.org/package=logiBin)
+- [woeBinning](https://CRAN.R-project.org/package=woeBinning)
+- [binr](https://CRAN.R-project.org/package=binr)
+
+## Getting Help
+
+If you encounter a bug, please file a minimal reproducible example using
+[reprex](https://reprex.tidyverse.org/index.html) on github. For
+questions and clarifications, use
+[StackOverflow](https://stackoverflow.com/).
+
+## Code of Conduct
+
+Please note that the rbin project is released with a [Contributor Code
+of Conduct](https://rbin.rsquaredacademy.com/CODE_OF_CONDUCT.html). By
+contributing to this project, you agree to abide by its terms.

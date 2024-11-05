@@ -66,9 +66,9 @@ rbin_quantiles <- function(data = NULL, response = NULL, predictor = NULL, bins 
 
   }
 
-  result    <- list(bins = cbind(intervals, k),
-                    method = "Quantile",
-                    vars = var_names,
+  result    <- list(bins      = cbind(intervals, k),
+                    method    = "Quantile",
+                    vars      = var_names,
                     lower_cut = l_freq,
                     upper_cut = u_freq)
 
@@ -99,7 +99,7 @@ plot.rbin_quantiles <- function(x, print_plot = TRUE, ...) {
     print(p)
   }
 
-  return(p)
+  invisible(p)
 
 }
 
