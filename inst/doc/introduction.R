@@ -48,6 +48,14 @@ bins
 # plot
 plot(bins)
 
+## ----equal_freq---------------------------------------------------------------
+bins <- rbin_equal_freq(mbank, y, age, 10)
+bins
+colSums(rbin_create(mbank, age, bins)[-seq_along(mbank)])
+
+## ----equal_freq_plot, fig.width=7, fig.height=5, fig.align='center'-----------
+plot(bins)
+
 ## ----equal_length-------------------------------------------------------------
 bins <- rbin_equal_length(mbank, y, age, 10)
 bins
